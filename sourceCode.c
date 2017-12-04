@@ -755,7 +755,7 @@ void invShiftRow(uch mat[4][4])
 **In GF, addition operation is equivalent to bitwise XOR operation.
 **Here, multiplying any hexadecimal character with 0x02 is replaced by logical left shift once and conditional bitwise XOR operation.
 **Here, multiplying any hexadecimal character with 0x03 is replaced by multiplication with 0x02 and bitwise XOR operation with hexadecimal **character. */
-/*void mixCol(uch mat[4][4])
+void mixCol(uch mat[4][4])
 {
 	uch a[4];						//It will contain column of matrix mat.
 	uch b[4];						//It will contain elemnts of a[] multiplied by 0x02.
@@ -777,9 +777,9 @@ void invShiftRow(uch mat[4][4])
     		mat[2][j] = b[2] ^ a[1] ^ a[0] ^ b[3] ^ a[3]; 
 		mat[3][j] = b[3] ^ a[2] ^ a[1] ^ b[0] ^ a[0]; 
 	}
-}*/
+}
 
-void mixCol(uch mat[4][4])
+/*void mixCol(uch mat[4][4])
 {
 	uch a[4];						//It will contain column of matrix mat.
 	int i,j;
@@ -797,7 +797,7 @@ void mixCol(uch mat[4][4])
     		mat[2][j] = (a[0]) ^ (a[1]) ^ (mul2[a[2]]) ^ (mul3[a[3]]); 
 		mat[3][j] = (mul3[a[0]]) ^ (a[1]) ^ (a[2]) ^ (mul2[a[3]]);
 	}
-}
+}*/
 
 //This function uses some predifned lookup table in Inverse Mix Column operation while decrypting.
 void invMixCol(uch mat[4][4])
