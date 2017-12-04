@@ -1,5 +1,9 @@
 # Cryptographic-Messaging-Service
-A messaging service in which the messages are encrypted from the sender end and gets decrypted to the viewer end.
-The users can login or register, after this user can send message, view most recent message or logout.
-Messages can be sent to only those users who are registered.
-AES algorithm is used for encryption and decryption of message.
+
+A messaging service in which user can either login or register.
+After this, user will be taken to the dashboard.
+Dashboard will allow the user to send messages to the registered users, see most recent message and logout.
+AES algorithm is used for encryption and decryption of messages.
+For now, a single random 128 bits key is used.
+
+
