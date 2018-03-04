@@ -3,7 +3,7 @@
 #include<stdlib.h>
 #define clear() printf("\033[H\033[J");			//For clearing the screen
 typedef unsigned char uch;				
-uch key[]="911kntavasnsk707";				//Symmetric key used in AES.
+uch key[]="911kntavasnsk707222";				//Symmetric key used in AES.
 
 // Structure for storing user details.
 
@@ -323,33 +323,33 @@ void userRegister (userData u[], int *count)
 		
 		tryUsername:	printf(" Enter a suitable Username \n ");
 		
-		scanf(" %s", u[*count].userName);
+				scanf(" %s", u[*count].userName);
 					
-		for(i=0 ; i<(*count) ; i++)
-		{
-			if(strcmp(u[*count].userName, u[i].userName) == 0)		//To check if the username entered is unique.
-			{
-				printf("\n Username already exists. Please try something else.\n");
-				goto tryUsername;		//Will jump to tryUsername and again ask user to enter Username.
-			}
-		}
+				for(i=0 ; i<(*count) ; i++)
+				{
+					if(strcmp(u[*count].userName, u[i].userName) == 0)	//To check if the username entered is unique.
+					{
+						printf("\n Username already exists. Please try something else.\n");
+						goto tryUsername;	//Will jump to tryUsername and again ask user to enter Username.
+					}
+				}
 		
 		tryPassword:	printf(" Enter a strong Password \n ");
 		
-		scanf(" %s", u[*count].password);
-		printf(" Confirm your Password \n ");
-		scanf(" %s", confirm_password);
+				scanf(" %s", u[*count].password);
+				printf(" Confirm your Password \n ");
+				scanf(" %s", confirm_password);
 		
-		if(strcmp(u[*count].password, confirm_password) != 0)		// To check if the passwords entered are same.
-		{
-			printf(" \nPasswords didn't match. Please try again.\n");
-			goto tryPassword;				//Will jump to tryPassword and again ask user to enter password.
-		}
+				if(strcmp(u[*count].password, confirm_password) != 0)		// To check if the passwords entered are same.
+				{
+					printf(" \nPasswords didn't match. Please try again.\n");
+					goto tryPassword;		//Will jump to tryPassword and again ask user to enter password.
+				}
 	
-		(*count)++;						 	// Incremented, to update the no. of users registered.
-		clear();		
-		strcpy(loggedUserName, u[*count].userName);	//Copy logged User's username to global variable loggedUserName.	
-		userDashboard(u, count);					// Take the User to the Dashboard.
+				(*count)++;					 // Incremented, to update the no. of users registered.
+				clear();		
+				strcpy(loggedUserName, u[*count].userName);//Copy logged User's username to global variable loggedUserName.	
+				userDashboard(u, count);				// Take the User to the Dashboard.
 	}
 	
 	else if(input == 2)
@@ -524,7 +524,10 @@ void performAesEncryption(uch message[])
 		{
 			for(j=0;j<4;j++)
 			{
-				mat[j][i]=message[k];
+				if(k<strlen(message))
+					mat[j][i]=message[k];
+				else
+					mat[j][i]=' ';
 				k++;
 			}
 		}
@@ -622,7 +625,7 @@ void addKey(uch mat[4][4])
 	for(i=0;i<4;i++)
 	{
 		for(j=0;j<4;j++)
-			mat[j][i] = mat[j][i] ^ key[j];
+			mat[j][i] = mat[j][i] ^ key[i+j];
 	}
 
 }
@@ -634,7 +637,7 @@ void invaddKey(uch mat[4][4])
 	for(i=0;i<4;i++)
 	{
 		for(j=0;j<4;j++)
-			mat[j][i] = mat[j][i] ^ key[j];
+			mat[j][i] = mat[j][i] ^ key[i+j];
 	}
 }
 
