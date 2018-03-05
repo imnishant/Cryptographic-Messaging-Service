@@ -3,7 +3,7 @@
 #include<stdlib.h>
 #define clear() printf("\033[H\033[J");			//For clearing the screen
 typedef unsigned char uch;				
-uch key[]="911kntavasnsk707";				//Symmetric key used in AES.
+uch key[]="1010101010101010";				//Symmetric key used in AES.
 
 // Structure for storing user details.
 
@@ -588,20 +588,20 @@ void encrypt(uch mat[4][4])
 {
 	int i;
 
-	//addKey(mat);
+	addKey(mat);
 	//round 1 to 9
 	for(i=1;i<=9;i++)
 	{
 		//byteSub(mat);
 		shiftRow(mat);
 		mixCol(mat);
-		//addKey(mat);
+		addKey(mat);
 	}
 	
 	//round 10
 	//byteSub(mat);
 	shiftRow(mat);
-	//addKey(mat);
+	addKey(mat);
 }
 
 //This function will manage operations to be performed in each round of AES Decryption.
@@ -610,19 +610,19 @@ void decrypt(uch mat[4][4])
 	int i;
 	
 	//round 10
-	//invaddKey(mat);
+	invaddKey(mat);
 	invShiftRow(mat);
 	//invbyteSub(mat);
 	
 	//round 9 to 1
 	for(i=9;i>=1;i--)
 	{
-		//invaddKey(mat);
+		invaddKey(mat);
 		invMixCol(mat);
 		invShiftRow(mat);
 		//invbyteSub(mat);
 	}
-	///invaddKey(mat);
+	invaddKey(mat);
 }
 
 //This function will perform XOR operation for each byte of the matrix mat with corresponding byte of key.
