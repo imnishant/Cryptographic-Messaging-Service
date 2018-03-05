@@ -3,7 +3,7 @@
 #include<stdlib.h>
 #define clear() printf("\033[H\033[J");			//For clearing the screen
 typedef unsigned char uch;				
-uch key[]="911kntavasnsk707222";				//Symmetric key used in AES.
+uch key[]="911kntavasnsk707";				//Symmetric key used in AES.
 
 // Structure for storing user details.
 
@@ -480,7 +480,7 @@ void displayMessage(userData u[], int *count)
 	else
 	{
 		//fscanf(fp,"%[^\n]s",message);			//Encrypted message is stored in message string.
-		fgets(message, 200, fp);
+		fgets(message, 400, fp);
 		performAesDecryption(message);			//Function will decrypt the encrypted message.
 		printf("%s\n",message);
 		printf("\n");
@@ -588,20 +588,20 @@ void encrypt(uch mat[4][4])
 {
 	int i;
 
-	addKey(mat);
+	//addKey(mat);
 	//round 1 to 9
 	for(i=1;i<=9;i++)
 	{
-		byteSub(mat);
+		//byteSub(mat);
 		shiftRow(mat);
 		mixCol(mat);
-		addKey(mat);
+		//addKey(mat);
 	}
 	
 	//round 10
-	byteSub(mat);
+	//byteSub(mat);
 	shiftRow(mat);
-	addKey(mat);
+	//addKey(mat);
 }
 
 //This function will manage operations to be performed in each round of AES Decryption.
@@ -610,29 +610,33 @@ void decrypt(uch mat[4][4])
 	int i;
 	
 	//round 10
-	invaddKey(mat);
+	//invaddKey(mat);
 	invShiftRow(mat);
-	invbyteSub(mat);
+	//invbyteSub(mat);
 	
 	//round 9 to 1
 	for(i=9;i>=1;i--)
 	{
-		invaddKey(mat);
+		//invaddKey(mat);
 		invMixCol(mat);
 		invShiftRow(mat);
-		invbyteSub(mat);
+		//invbyteSub(mat);
 	}
-	invaddKey(mat);
+	///invaddKey(mat);
 }
 
 //This function will perform XOR operation for each byte of the matrix mat with corresponding byte of key.
 void addKey(uch mat[4][4])
 {
-	int i,j;
+	int i,j,k=0;
 	for(i=0;i<4;i++)
 	{
 		for(j=0;j<4;j++)
-			mat[j][i] = mat[j][i] ^ key[i+j];
+		{
+			mat[j][i] = mat[j][i] ^ key[k];
+			k++;
+		}
+
 	}
 
 }
@@ -640,11 +644,15 @@ void addKey(uch mat[4][4])
 //This function will also perform XOR operation for each byte of the matrix mat with corresponding byte of key.
 void invaddKey(uch mat[4][4])
 {
-	int i,j;
+	int i,j,k=0;
 	for(i=0;i<4;i++)
 	{
 		for(j=0;j<4;j++)
-			mat[j][i] = mat[j][i] ^ key[i+j];
+		{
+			mat[j][i] = mat[j][i] ^ key[k];
+			k++;
+		}
+
 	}
 }
 
