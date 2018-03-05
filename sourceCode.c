@@ -441,17 +441,23 @@ void sendMessage(userData u[], int *db_size)
 void actualMessage(char usr_name[])
 {
     FILE *fp;
-    uch msg[200];
+    int ch;
+    uch msg[400];
     char msg_filename[15];
     strcpy(msg_filename,usr_name);					
     strcat(msg_filename,".txt");					// Append the filename with '.txt' to make it a proper file name.
     fp = fopen(msg_filename,"w");
+   
+    
+    while ((ch = getchar()) != '\n' && ch != EOF);                      // To clear input buffer.
     
     printf("\n (Please enter the message for %s and then press (Tab -> Enter) to send it)\n ", usr_name);
     printf(" MESSAGE:\n\n");
-    scanf("%[^\t]s",msg);
+    gets(msg);
+    //scanf("%[^\t]s",msg);
     performAesEncryption(msg);						//Function will encrypt the message.
-    fprintf(fp,"%s",msg);						//Encrypted message is stored in a file.
+    //fprintf(fp,"%s",msg);						//Encrypted message is stored in a file.
+    fputs(msg, fp);
     fclose(fp);
     clear();
 }
@@ -463,7 +469,7 @@ void displayMessage(userData u[], int *count)
 	FILE *fp;
 	char msg_filename[15];
 	int choice;
-	uch message[200];
+	uch message[400];
 
 	strcpy(msg_filename,loggedUserName);				// Copy the logged user's Username to variable msg_filename.
 	strcat(msg_filename,".txt"); 					// Append the filename with '.txt' to make it a proper file name.
@@ -473,7 +479,8 @@ void displayMessage(userData u[], int *count)
 		printf(" No Messages for you! \n\n");
 	else
 	{
-		fscanf(fp,"%s",message);			//Encrypted message is stored in message string.
+		//fscanf(fp,"%[^\n]s",message);			//Encrypted message is stored in message string.
+		fgets(message, 200, fp);
 		performAesDecryption(message);			//Function will decrypt the encrypted message.
 		printf("%s\n",message);
 		printf("\n");
