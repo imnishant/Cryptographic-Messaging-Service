@@ -1,4 +1,4 @@
-# Cryptographic-Messaging-Service
+# Cryptographic-Messaging-Service using C
 
 A messaging service in which user can either login or register.
 After this, user will be taken to the dashboard.
